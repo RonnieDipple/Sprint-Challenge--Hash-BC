@@ -5,9 +5,8 @@
 # print
 from hashtables import (HashTable,
                         hash_table_insert,
-                        hash_table_remove,
                         hash_table_retrieve,
-                        hash_table_resize)
+                        )
 
 
 class Ticket:
@@ -20,19 +19,22 @@ def reconstruct_trip(tickets, length):
     hashtable = HashTable(length)
     route = [None] * length
 
-    #Inserts into table
-    for i in range(length):
-        hash_table_insert(hashtable, tickets[i].source, tickets[i].destination)
+    destination = None
 
-    # Sets the first destination to the starting points destination
-    route[0] = hash_table_retrieve(hashtable, 'NONE')
+    # The ticket for your first flight has a destination with a `source` of `NONE`
+    # Therefore find the ticket with NONE
+    for ticket in tickets:
+        if ticket.source == "NONE":
+            destination = ticket.destination
+        # Add all the tickets into the hash_table
+        hash_table_insert(hashtable, ticket.source, ticket.destination)
 
-    # after the starting point loops through the route list then sets the next destination in the list
-    for i in range(1, length):
-        route[i] = hash_table_retrieve(hashtable, route[i - 1])
+        # Add the new destiantion of each ticket to the route.
+        for i in range(len(tickets)):
+            route[i] = destination
+            destination = hash_table_retrieve(hashtable, destination)
 
-    # Returns the list of routes
-    return route
+        return route[:-1]
 
 reconstruct_trip([
     Ticket("PIT", "ORD"),

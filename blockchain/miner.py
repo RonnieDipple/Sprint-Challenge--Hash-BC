@@ -23,11 +23,12 @@ def proof_of_work(last_proof):
     start = timer()
 
     print("Searching for next proof")
-    #Random number generator for proof
-    proof = random.randint(-2147483648, 2147483647)
-    while valid_proof(last_proof, proof) is False:
-        proof = str(uuid4()).replace('-', '')
-        #print(proof)
+    #Generates number
+    proof = random.randint(-sys.maxsize + 10, 0)
+    # Gives Last six characters of hash and encodes
+    last_hash = hashlib.sha256(str(last_proof).encode()).hexdigest()[-6:]
+    while valid_proof(last_hash, proof) is False:
+        proof += 1
 
     #returns proof found plus time
     print("Proof found: " + str(proof) + " in " + str(timer() - start))
@@ -43,16 +44,11 @@ def valid_proof(last_hash, proof):
     IE:  last_hash: ...AE9123456, new hash 123456E88...
     """
 
-    #Encode so it is understandable
-    last = f'{last_hash}'.encode()
-    guess_proof = f'{proof}'.encode()
+    # Encodes the first six characters of the hash
+    first_six = hashlib.sha256(str(proof).encode()).hexdigest()[:6]
 
-    # sha256
-    last_hash = hashlib.sha256(last).hexdigest()
-    guess_hash = hashlib.sha256(guess_proof).hexdigest()
-
-    #Thiis is where the magic happens, compares last hash characters with the guess proof
-    return last_hash[-6:] == guess_hash[:6]
+    #  if first six characters of hash equal to the last six characters returns true.
+    return first_six == last_hash
 
 
 if __name__ == '__main__':

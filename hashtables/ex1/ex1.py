@@ -6,7 +6,7 @@ from hashtables import (HashTable)
 # Find two items whose sum of weights equals the `limit`.
 # Your function will return an instance of an `Answer` tuple that has the following form:
 def get_indices_of_item_weights(weights, length, limit):
-    ht = HashTable(16)
+    #ht = HashTable(16)
 
     #base case if weight is below 1 end the program
     if len(weights) <= 1:
@@ -33,4 +33,4 @@ def print_answer(answer):
         print("None")
 
 
-
+get_indices_of_item_weights([12, 6, 7, 14, 19, 3, 0, 25, 40], 9, 7)
