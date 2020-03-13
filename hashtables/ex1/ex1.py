@@ -1,11 +1,10 @@
+# Merging Two Packages
+
 #  Hint:  You may not need all of these.  Remove the unused functions.
-from hashtables import (HashTable,
-                        hash_table_insert,
-                        hash_table_remove,
-                        hash_table_retrieve,
-                        hash_table_resize)
+from hashtables import (HashTable)
 
-
+# Find two items whose sum of weights equals the `limit`.
+# Your function will return an instance of an `Answer` tuple that has the following form:
 def get_indices_of_item_weights(weights, length, limit):
     ht = HashTable(16)
 
@@ -16,9 +15,15 @@ def get_indices_of_item_weights(weights, length, limit):
     result = [] # to store the result to be returned and printed
     table = {} # The table itself
 
-    # Traversal bruteforce
+    # Traversal bruteforce, loops over weight
     for i in range(0, len(weights)):
         limit_subtracted_weight = limit - weights[i]
+        
+        table[weights[i]] = limit_subtracted_weight
+    for i in range(0, len(weights)):
+        if limit - weights[i] in table:
+            result.insert(0 , i)
+    return result
 
 
 def print_answer(answer):
