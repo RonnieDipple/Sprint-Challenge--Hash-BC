@@ -9,11 +9,16 @@ from hashtables import (HashTable,
 def get_indices_of_item_weights(weights, length, limit):
     ht = HashTable(16)
 
-    """
-    YOUR CODE HERE
-    """
+    #base case if weight is below 1 end the program
+    if len(weights) <= 1:
+        return None
 
-    return None
+    result = [] # to store the result to be returned and printed
+    table = {} # The table itself
+
+    # Traversal bruteforce
+    for i in range(0, len(weights)):
+        limit_subtracted_weight = limit - weights[i]
 
 
 def print_answer(answer):
@@ -21,3 +26,6 @@ def print_answer(answer):
         print(str(answer[0] + " " + answer[1]))
     else:
         print("None")
+
+
+
