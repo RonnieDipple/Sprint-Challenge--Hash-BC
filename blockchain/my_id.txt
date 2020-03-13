@@ -1,1 +1,1 @@
-NONAME
+mining_miner
