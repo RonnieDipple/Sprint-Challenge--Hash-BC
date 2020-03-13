@@ -38,6 +38,8 @@ def valid_proof(last_hash, proof):
 
     IE:  last_hash: ...AE9123456, new hash 123456E88...
     """
+    last = f'{last_hash}'.encode()
+    guess_proof = f'{proof}'.encode()
 
     # TODO: Your code here!
     pass
