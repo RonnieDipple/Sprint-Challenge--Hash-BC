@@ -38,11 +38,17 @@ def valid_proof(last_hash, proof):
 
     IE:  last_hash: ...AE9123456, new hash 123456E88...
     """
+
+    #Encode so it is understandable
     last = f'{last_hash}'.encode()
     guess_proof = f'{proof}'.encode()
 
-    # TODO: Your code here!
-    pass
+    # sha256
+    last_hash = hashlib.sha256(last).hexdigest
+    guess_hash = hashlib.sha256(guess_proof).hexdigest
+
+    #Thiis is where the magic happens, compares last hash characters with the guess proof
+    return last_hash[-6:] == guess_hash[:6]
 
 
 if __name__ == '__main__':
@@ -50,7 +56,8 @@ if __name__ == '__main__':
     if len(sys.argv) > 1:
         node = sys.argv[1]
     else:
-        node = "https://lambda-coin.herokuapp.com/api"
+        #node = "https://lambda-coin.herokuapp.com/api"
+        node = "python3 miner.py https://lambda-coin-test-1.herokuapp.com/api"
 
     coins_mined = 0
 
