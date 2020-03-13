@@ -23,9 +23,13 @@ def proof_of_work(last_proof):
     start = timer()
 
     print("Searching for next proof")
-    proof = 0
-    #  TODO: Your code here
+    #Random number generator for proof
+    proof = random.randint(-2147483648, 2147483647)
+    while valid_proof(last_proof, proof) is False:
+        proof = str(uuid4()).replace('-', '')
+        #print(proof)
 
+    #returns proof found plus time
     print("Proof found: " + str(proof) + " in " + str(timer() - start))
     return proof
 
@@ -44,8 +48,8 @@ def valid_proof(last_hash, proof):
     guess_proof = f'{proof}'.encode()
 
     # sha256
-    last_hash = hashlib.sha256(last).hexdigest
-    guess_hash = hashlib.sha256(guess_proof).hexdigest
+    last_hash = hashlib.sha256(last).hexdigest()
+    guess_hash = hashlib.sha256(guess_proof).hexdigest()
 
     #Thiis is where the magic happens, compares last hash characters with the guess proof
     return last_hash[-6:] == guess_hash[:6]
@@ -56,8 +60,8 @@ if __name__ == '__main__':
     if len(sys.argv) > 1:
         node = sys.argv[1]
     else:
-        #node = "https://lambda-coin.herokuapp.com/api"
-        node = "python3 miner.py https://lambda-coin-test-1.herokuapp.com/api"
+        node = "https://lambda-coin.herokuapp.com/api"
+        #node = "https://lambda-coin-test-1.herokuapp.com/api"
 
     coins_mined = 0
 
