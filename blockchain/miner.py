@@ -23,9 +23,14 @@ def proof_of_work(last_proof):
     start = timer()
 
     print("Searching for next proof")
-    proof = 0
-    #  TODO: Your code here
+    #Generates number
+    proof = random.randint(-sys.maxsize + 10, 0)
+    # Gives Last six characters of hash and encodes
+    last_hash = hashlib.sha256(str(last_proof).encode()).hexdigest()[-6:]
+    while valid_proof(last_hash, proof) is False:
+        proof += 1
 
+    #returns proof found plus time
     print("Proof found: " + str(proof) + " in " + str(timer() - start))
     return proof
 
@@ -39,8 +44,11 @@ def valid_proof(last_hash, proof):
     IE:  last_hash: ...AE9123456, new hash 123456E88...
     """
 
-    # TODO: Your code here!
-    pass
+    # Encodes the first six characters of the hash
+    first_six = hashlib.sha256(str(proof).encode()).hexdigest()[:6]
+
+    #  if first six characters of hash equal to the last six characters returns true.
+    return first_six == last_hash
 
 
 if __name__ == '__main__':
@@ -49,6 +57,7 @@ if __name__ == '__main__':
         node = sys.argv[1]
     else:
         node = "https://lambda-coin.herokuapp.com/api"
+        #node = "https://lambda-coin-test-1.herokuapp.com/api"
 
     coins_mined = 0
 
